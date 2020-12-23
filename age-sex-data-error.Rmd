@@ -1,0 +1,62 @@
+---
+title: "Error in age-sex Data of WB"
+author: |
+      | Saikat Roy
+      | IIPS/MBD/2020-22
+date: "23/12/2020"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+The errors in the age-sex data of West Bengal as enumerated in the census of West Bengal, 2011 are discussed here.
+
+```{r import, echo=FALSE, warning=FALSE, results='hide', message=FALSE}
+library(readxl)
+wbagesexdata <- read_excel("DDW-1900C-13.xls", 
+    range = "E9:H109", col_names = FALSE)
+
+colnames(wbagesexdata) <- c("age","total","male","female")
+wbagesexdata = as.data.frame(wbagesexdata)
+wbagesexdata$age = as.character(wbagesexdata$age)
+wbagesexdata$age = factor(wbagesexdata$age, levels = unique(wbagesexdata$age))
+```
+
+### Single-year Age Groups
+
+Line curves are plotted for total, male and female populations according as the ages.
+
+```{r linecurve}
+library(ggplot2)
+library(reshape2)
+mdf <- melt(wbagesexdata, id.vars="age")
+
+
+linefig <- ggplot(mdf, aes( x=age, y=value, colour=variable, group=variable )) + 
+  geom_line() +
+  geom_point() +
+  scale_color_manual(values=c("total"="black","male"="red","female"="orange")) +
+  scale_linetype_manual(values=c("total"="dashed", "male"="solid","female"="solid")) +
+  scale_x_discrete(breaks = wbagesexdata$age[c(T,F,F,F,F)]) +
+  ggtitle("Age-Sex Population Distribution, \n West Bengal (2011)") +
+  xlab("Population") + ylab("Age (lbd)") +
+  theme(plot.title = element_text(hjust = 0.5))
+
+linefig
+
+```
+
+Single year population pyramid with absolute population size values for each age-sex is constructed.
+
+```{r pyramid, fig.height=10, fig.width=12}
+malefemale <- wbagesexdata[,c(3,4,1)]
+library(pyramid)
+
+pyramid(malefemale,Llab="Males", Rlab="Females", Clab="Age (lbd)",main = "Single-year Age Population Pyramid \n West Bengal, 2011", Cstep = 5)
+```
+
+It is clear from the above figures that population count unusually spikes hugely at ages ending 0 and 5. Spikes, albeit smaller, are also noticed at even ages. It is clear that people are biased in favour of reporting ages divisible by 5 and slightly lesser biased towards reporting even ages. The tendency to report odd ages is low. This age-heaping causes errors.
+
+
