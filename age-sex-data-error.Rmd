@@ -2,7 +2,7 @@
 title: "Error in age-sex Data of WB"
 author: |
       | Saikat Roy
-      | IIPS/MBD/2020-22
+      | IIPS/MBD/2020-22/28
 date: "23/12/2020"
 output: pdf_document
 ---
@@ -41,7 +41,7 @@ linefig <- ggplot(mdf, aes( x=age, y=value, colour=variable, group=variable )) +
   scale_linetype_manual(values=c("total"="dashed", "male"="solid","female"="solid")) +
   scale_x_discrete(breaks = wbagesexdata$age[c(T,F,F,F,F)]) +
   ggtitle("Age-Sex Population Distribution, \n West Bengal (2011)") +
-  xlab("Population") + ylab("Age (lbd)") +
+  ylab("Population") + xlab("Age (lbd)") +
   theme(plot.title = element_text(hjust = 0.5))
 
 linefig
@@ -57,6 +57,40 @@ library(pyramid)
 pyramid(malefemale,Llab="Males", Rlab="Females", Clab="Age (lbd)",main = "Single-year Age Population Pyramid \n West Bengal, 2011", Cstep = 5)
 ```
 
-It is clear from the above figures that population count unusually spikes hugely at ages ending 0 and 5. Spikes, albeit smaller, are also noticed at even ages. It is clear that people are biased in favour of reporting ages divisible by 5 and slightly lesser biased towards reporting even ages. The tendency to report odd ages is low. This age-heaping causes errors.
+It is clear from the above figures that population count unusually spikes hugely at ages ending 0 and 5. Spikes, albeit smaller, are also noticed at even ages.In reality, the age-sex distribution ought to be smooth and devoid of all the spikes. It is clear that people are biased in favour of reporting ages divisible by 5 and slightly lesser biased towards reporting even ages. The tendency to report odd ages is low. This age-heaping is a prime source of errors.
 
+
+```{r whipple, echo=FALSE, message=FALSE}
+attach(wbagesexdata)
+age5 <- seq(25,60,5) +1
+totpop5 <- sum(total[age=age5])
+
+age0 <- seq(30,60,10) + 1
+totpop0 <- sum(total[age=age0])
+
+age2362 <- c(23:62) + 1
+totpop2362  <- sum(total[age=age2362])
+
+WI0 <- totpop0 / (totpop2362/10) * 100
+
+WI5 <- totpop5 / (totpop2362/5) * 100
+detach(wbagesexdata)
+
+```
+
+
+
+The __Whipple's index__ measures the extent of preference for ages ending with 0 and 5 under the assumption of rectangularity or linearity assumption in a ten-year age range.
+
+Given that $P_{x}$ is the population of West Bengal of the cohort with lbd $x$,  the *Whipple's index* for heaping on terminal age digit `0' is measured as,
+
+$$WI_{0} = \dfrac{P_{30} + P_{40} + P_{50} + P_{60}}{\dfrac{P_{23} + P_{24} + P_{25}+ \ldots + P_{62}}{10} } \times 100  ~=~`r round(WI0,2)` $$
+
+
+
+and that for heaping on terminal age digit `5' is measured as,
+
+$$WI_{5} = \dfrac{P_{25} + P_{30} + P_{35} + P_{40}+ P_{45} + P_{50} + P_{55}+ P_{60}}{\dfrac{P_{23} + P_{24} + P_{25}+ \ldots + P_{62}}{5} } \times 100 ~=~ `r round(WI5,2)`$$
+
+The *Whipple's index* for both ages ending 0 and 5 are very high. This denotes that the data is not accurate due to high digit preferences for 0 and 5 which results in age-heaping.
 
