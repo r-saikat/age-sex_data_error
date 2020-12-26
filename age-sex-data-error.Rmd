@@ -5,6 +5,9 @@ author: |
       | IIPS/MBD/2020-22/28
 date: "23/12/2020"
 output: pdf_document
+header-includes:
+- \usepackage{setspace}\onehalfspacing
+- \usepackage{float}
 ---
 
 ```{r setup, include=FALSE}
@@ -24,7 +27,9 @@ wbagesexdata$age = as.character(wbagesexdata$age)
 wbagesexdata$age = factor(wbagesexdata$age, levels = unique(wbagesexdata$age))
 ```
 
-### Single-year Age Groups
+## Single-year Age Groups
+
+### Graphical Methods
 
 Line curves are plotted for total, male and female populations according as the ages.
 
@@ -79,8 +84,9 @@ detach(wbagesexdata)
 ```
 
 
+### Whipple's Index
 
-The __Whipple's index__ measures the extent of preference for ages ending with 0 and 5 under the assumption of rectangularity or linearity assumption in a ten-year age range.
+The _Whipple's index_ measures the extent of preference for ages ending with 0 and 5 under the assumption of rectangularity or linearity assumption in a ten-year age range.
 
 Given that $P_{x}$ is the population of West Bengal of the cohort with lbd $x$,  the *Whipple's index* for heaping on terminal age digit `0' is measured as,
 
@@ -92,5 +98,39 @@ and that for heaping on terminal age digit `5' is measured as,
 
 $$WI_{5} = \dfrac{P_{25} + P_{30} + P_{35} + P_{40}+ P_{45} + P_{50} + P_{55}+ P_{60}}{\dfrac{P_{23} + P_{24} + P_{25}+ \ldots + P_{62}}{5} } \times 100 ~=~ `r round(WI5,2)`$$
 
-The *Whipple's index* for both ages ending 0 and 5 are very high. This denotes that the data is not accurate due to high digit preferences for 0 and 5 which results in age-heaping.
+The *Whipple's indices* for ages ending 0 and 5 are very high. This denotes that the data is not accurate due to high digit preferences for 0 and 5 which results in age-heaping.
 
+### Myre's Index
+
+The *Myre's index* for the blended population of West Bengal comes out to be 11.13. The terminal digits, as arranged in descending order are 0, 5, 3, 9, 7, 4, 1, 2, 8, 6. As usual, terminal digits 0 and 5 occupy the highest positions in terminal digit preference. Interestingly, in the case of West Bengal, the terminal digit 3 has high preference. This may also be corroborated from the line diagrams. The population seems to jump at most ages ending with age 3.
+
+
+# Five-Year Age Group
+
+### UN Age-Sex Score
+
+The *United Nations age-sex score* gives the inaccuracies in age-sex data of 5 year age-groups.
+
+Let $_{5}M_{x}$ and $_{5}F_{x}$ be the male and female population in the $x_{th}$ age-group of a five - year age group population distribution. The *index of sex-ratio score* is given as,
+
+$$
+SRS = \dfrac{\sum_{x=5}^{70}\left\lvert \dfrac{_{5}M_{x}}{_{5}F_{x}} - \dfrac{_{5}M_{x-5}}{_{5}F_{x-5}}  \right\rvert \times 100}{n-1}
+$$
+
+where $n$ is the number of age-groups in the data.
+
+The *index of age-ratio score* is given by,
+
+$$
+MARS = \dfrac{\sum_{x=5}^{70} \left\lvert _{5}MAR_{x} - 100  \right\rvert}{n-2}   \qquad ;    \qquad   FARS = \dfrac{\sum_{x=5}^{70} \left\lvert _{5}FAR_{x} - 100  \right\rvert}{n-2}
+$$
+
+where $_{5}MAR_{x}$ and $_{5}MAR_{x}$ are the age ratios of males and females at the $x_{th}$ 5 year age group.
+
+The *UN age-sex accuracy index/ joint score* finally comes out to be
+
+$$
+UNJS=MARS~+~FARS~+3~\times~SRS = 21.27
+$$
+
+This signifies that there are inaccuracies in this 5 year age group data.

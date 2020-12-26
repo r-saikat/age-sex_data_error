@@ -52,3 +52,16 @@ WI0 <- totpop0 / (totpop2362/10) * 100
 
 WI5 <- totpop5 / (totpop2362/5) * 100
 detach(wbagesexdata)
+
+
+# This calculates the Myer's Index
+
+data <- wbagesexdata[-101,c(1,2)]
+
+
+# This needs some more investigation. I am out of patience and just want to submit this assignment. Calculating Myer's index in Excel for now. I need to refer to timriffe/AgeHeaping on GitHub later.
+
+rm(list=ls())   #Purge all data from memory.
+
+
+
