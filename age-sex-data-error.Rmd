@@ -1,10 +1,12 @@
 ---
 title: "Error in age-sex Data of WB"
 author: |
-      | Saikat Roy
-      | IIPS/MBD/2020-22/28
+  | Saikat Roy
+  | IIPS/MBD/2020-22/28
 date: "23/12/2020"
-output: pdf_document
+output:
+  pdf_document: default
+  word_document: default
 header-includes:
 - \usepackage{setspace}\onehalfspacing
 - \usepackage{float}
@@ -102,7 +104,7 @@ The *Whipple's indices* for ages ending 0 and 5 are very high. This denotes that
 
 ### Myre's Index
 
-The *Myre's index* for the blended population of West Bengal comes out to be 11.13. The terminal digits, as arranged in descending order are 0, 5, 3, 9, 7, 4, 1, 2, 8, 6. As usual, terminal digits 0 and 5 occupy the highest positions in terminal digit preference. Interestingly, in the case of West Bengal, the terminal digit 3 has high preference. This may also be corroborated from the line diagrams. The population seems to jump at most ages ending with age 3.
+The *Myre's index* for the blended population of West Bengal comes out to be 11.13. The terminal digits, as arranged in descending order are 0, 5, 8, 6, 2, 1, 4, 7, 9, 3. As usual, terminal digits 0 and 5 occupy the highest positions in terminal digit preference. Also, there is age heaping in case of even terminal digits.
 
 
 # Five-Year Age Group
